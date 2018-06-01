@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
 
@@ -39,7 +40,23 @@ namespace MyIdentityServer
                     ClientSecrets = new List<Secret> {
                         new Secret("superSecretPassword".Sha256())},
                     AllowedScopes = new List<string> {"customAPI.read"}
-                }
+                },
+
+                new Client {
+                ClientId = "openIdConnectClient",
+                ClientName = "Example Implicit Client Application",
+                AllowedGrantTypes = GrantTypes.Implicit,
+                AllowedScopes = new List<string>
+                {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    IdentityServerConstants.StandardScopes.Email,
+                    "role",
+                    "customAPI.write"
+                },
+                RedirectUris = new List<string> {"http://localhost:5002/signin-oidc"},
+                PostLogoutRedirectUris = new List<string> {"http://localhost:5002"}
+            }
             };
         }
     }
