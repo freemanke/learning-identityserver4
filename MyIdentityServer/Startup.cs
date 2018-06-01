@@ -23,6 +23,7 @@ namespace MyIdentityServer
                 .AddInMemoryApiResources(Resources.GetApiResources())
                 .AddTestUsers(Users.Get())
                 .AddDeveloperSigningCredential();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,10 +34,15 @@ namespace MyIdentityServer
                 app.UseDeveloperExceptionPage();
             }
             app.UseIdentityServer();
+            app.UseStaticFiles();
+            app.UseMvcWithDefaultRoute();
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("Hello World!");
             });
         }
     }
+
+
+
 }
