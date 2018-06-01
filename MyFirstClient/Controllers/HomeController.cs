@@ -13,7 +13,6 @@ namespace MyFirstClient.Controllers
     {
         public IActionResult Index()
         {
-            var user = User;
             return View();
         }
 
